@@ -1,34 +1,18 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import {getAllCatsServices} from './../../services/comucationService'
 
 
-const emails = ['username@gmail.com', 'user02@gmail.com'];
-const DialogListInformation = (props) => 
-{
-    const [items, setItems] = useState([])
-    const { onClose, open } = props;
+const DialogListInformation = (props) => {
+    const { onClose, open , text, items } = props;
     const handleClose = () => {
       onClose();
     };
-    useEffect(() => {
-        const getAllCats = async () => {
-          try {
-            const { data } = await getAllCatsServices();
-            console.log('data ::::::::::::::::', data);
-            setItems(data);
-          } catch (error) {
-            console.log(error);
-          }
-        };
-        getAllCats();
-      }, []);
+    
     return (
       <React.Fragment>
       <Dialog
@@ -38,11 +22,11 @@ const DialogListInformation = (props) =>
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">
-          Sabias que?
+          {text}
         </DialogTitle>
         <DialogContent>
           <ul>
-            {items.map((item, index) => (
+            {(items || []).map((item, index) => (
               <li key={index}>{item}</li>
             ))}
           </ul>
